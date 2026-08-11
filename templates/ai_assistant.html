@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>EduAI | AI Assistant</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .page-title {
+            padding: 30px 0 22px;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            margin: 5px 0;
+        }
+
+        .page-title p {
+            color: #8992a5;
+            font-size: 13px;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .ai-card {
+            background: white;
+            border: 1px solid #edf0f5;
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .model-box {
+            background: #f4f1ff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .model-icon {
+            width: 55px;
+            height: 55px;
+            margin: auto;
+            border-radius: 15px;
+            background: #7555e8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .model-box h2 {
+            color: #7555e8;
+            font-size: 36px;
+            margin: 12px 0 4px;
+        }
+
+        .model-box p {
+            color: #77708e;
+            font-size: 11px;
+        }
+
+        .factor {
+            margin: 17px 0;
+        }
+
+        .factor-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-size: 12px;
+        }
+
+        .factor-header span {
+            color: #687286;
+        }
+
+        .factor-bar {
+            height: 8px;
+            background: #edf0f5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .factor-bar div {
+            height: 100%;
+            background: #526df5;
+            border-radius: 20px;
+        }
+
+        .recommendation {
+            display: flex;
+            gap: 12px;
+            padding: 13px;
+            margin: 10px 0;
+            background: #f8f9fc;
+            border-radius: 9px;
+        }
+
+        .recommendation-icon {
+            width: 25px;
+            height: 25px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #eaf8f2;
+            color: #15976b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .recommendation p {
+            margin: 0;
+            font-size: 12px;
+            color: #687286;
+            line-height: 1.5;
+        }
+
+        .strength {
+            padding: 12px;
+            margin: 8px 0;
+            background: #eef2ff;
+            color: #526df5;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .improvement {
+            padding: 12px;
+            margin: 8px 0;
+            background: #fff4e5;
+            color: #d88916;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: #526df5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">E</div>
+
+        <div>
+            <h2>EduAI</h2>
+            <span>Student Portal</span>
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">MAIN MENU</div>
+
+    <a href="/" class="nav">
+        ⌂ <span>Dashboard</span>
+    </a>
+
+    <a href="/profile" class="nav">
+        ◉ <span>My Profile</span>
+    </a>
+
+    <a href="/performance" class="nav">
+        ▣ <span>Performance</span>
+    </a>
+
+    <a href="/attendance" class="nav">
+        ◷ <span>Attendance</span>
+    </a>
+
+
+    <div class="nav-title">INTELLIGENCE</div>
+
+    <a href="/ai-assistant" class="nav active">
+        ✦ <span>AI Assistant</span>
+    </a>
+
+    <a href="/analytics" class="nav">
+        ▥ <span>Analytics</span>
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="/logout" class="nav">
+            ↪ <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <section class="page-title">
+
+        <p class="small-label">ARTIFICIAL INTELLIGENCE</p>
+
+        <h1>AI Student Assistant</h1>
+
+        <p>
+            Machine-learning based academic analysis and
+            personalized recommendations.
+        </p>
+
+    </section>
+
+
+    <section class="ai-grid">
+
+
+        <!-- MODEL PREDICTION -->
+
+        <div class="ai-card">
+
+            <h3>Model Prediction</h3>
+
+            <div class="model-box">
+
+                <div class="model-icon">
+                    ✦
+                </div>
+
+                <h2>{{ prediction }}</h2>
+
+                <p>
+                    Predicted Academic Grade
+                </p>
+
+                <p>
+                    Model: Decision Tree Classifier
+                </p>
+
+            </div>
+
+
+            <h3>Model Input Factors</h3>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Python</span>
+                    <strong>{{ python }}%</strong>
+                </div>
+
+                <div class="factor-bar">
+                    <div style="width: {{ python }}%"></div>
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>DBMS</span>
+                    <strong>{{ dbms }}%</strong>
+                </div>
+
+                <div class="factor-bar">
+                    <div style="width: {{ dbms }}%"></div>
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>DSA</span>
+                    <strong>{{ dsa }}%</strong>
+                </div>
+
+                <div class="factor-bar">
+                    <div style="width: {{ dsa }}%"></div>
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Attendance</span>
+                    <strong>{{ attendance }}%</strong>
+                </div>
+
+                <div class="factor-bar">
+                    <div style="width: {{ attendance }}%"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI ANALYSIS -->
+
+        <div class="ai-card">
+
+            <h3>AI Analysis</h3>
+
+            <p style="color:#8992a5;font-size:12px;">
+                Personalized insights generated from
+                the student's academic data.
+            </p>
+
+
+            <h4 style="margin-top:20px;">
+                Strengths
+            </h4>
+
+            {% if python >= 75 %}
+            <div class="strength">
+                ✓ Strong Python performance
+            </div>
+            {% endif %}
+
+            {% if dbms >= 75 %}
+            <div class="strength">
+                ✓ Strong DBMS performance
+            </div>
+            {% endif %}
+
+            {% if dsa >= 75 %}
+            <div class="strength">
+                ✓ Strong DSA performance
+            </div>
+            {% endif %}
+
+            {% if attendance >= 85 %}
+            <div class="strength">
+                ✓ Excellent attendance
+            </div>
+            {% endif %}
+
+
+            <h4 style="margin-top:22px;">
+                Areas for Improvement
+            </h4>
+
+            {% if python < 60 %}
+            <div class="improvement">
+                ⚠ Improve Python fundamentals
+            </div>
+            {% endif %}
+
+            {% if dbms < 60 %}
+            <div class="improvement">
+                ⚠ Revise DBMS concepts
+            </div>
+            {% endif %}
+
+            {% if dsa < 60 %}
+            <div class="improvement">
+                ⚠ Practice DSA problems
+            </div>
+            {% endif %}
+
+            {% if attendance < 75 %}
+            <div class="improvement">
+                ⚠ Improve attendance
+            </div>
+            {% endif %}
+
+
+            <h4 style="margin-top:22px;">
+                Personalized Recommendations
+            </h4>
+
+
+            {% for recommendation in recommendations %}
+
+            <div class="recommendation">
+
+                <div class="recommendation-icon">
+                    ✓
+                </div>
+
+                <p>
+                    {{ recommendation }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <a href="/" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</main>
+
+</body>
+
+</html>

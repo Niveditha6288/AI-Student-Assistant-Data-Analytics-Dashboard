@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduAI | Student Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">E</div>
+        <div>
+            <h2>EduAI</h2>
+            <span>Student Portal</span>
+        </div>
+    </div>
+
+    <div class="nav-title">MAIN MENU</div>
+
+    <a class="nav active">⌂ <span>Dashboard</span></a>
+    
+<a href="/profile" class="nav">
+    ◉ <span>My Profile</span>
+</a>
+   <a href="/performance" class="nav">
+    ▣ <span>Performance</span>
+</a>
+   <a href="/attendance" class="nav">
+    ◷ <span>Attendance</span>
+</a>
+    <a class="nav">✓ <span>Assignments</span></a>
+
+    <div class="nav-title">INTELLIGENCE</div>
+
+<a href="/ai-assistant" class="nav">
+    ✦ <span>AI Assistant</span>
+   <a href="/analytics" class="nav">▥ <span>Analytics</span></a>
+
+    <div class="sidebar-bottom">
+        <a class="nav">⚙ <span>Settings</span></a>
+        <a href="/logout" class="nav">↪ <span>Logout</span></a>
+    </div>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+
+        
+
+        <div class="top-right">
+            <div class="notification">♢</div>
+
+            <div class="user">
+                <div class="avatar">P</div>
+
+                <div>
+                    <strong>{{ student_name }}</strong>
+                    <small>CSE • Semester {{ semester }}</small>
+                </div>
+
+                <span>⌄</span>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- WELCOME -->
+    <section class="welcome">
+
+        <div>
+            <p class="small-label">STUDENT DASHBOARD</p>
+
+            <h1>
+                Good morning, {{ student_name }} 👋
+            </h1>
+
+            <p>
+                Here's your academic performance overview.
+                Keep learning and improving!
+            </p>
+        </div>
+
+        <button class="date-btn">
+            📅 Semester {{ semester }}
+        </button>
+
+    </section>
+
+
+    <!-- STAT CARDS -->
+    <section class="stats">
+
+        <div class="stat-card blue">
+
+            <div class="stat-top">
+                <span>Average Marks</span>
+                <div class="stat-icon">▣</div>
+            </div>
+
+            <h2>{{ average }}%</h2>
+
+            <p>Overall performance</p>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <div class="stat-top">
+                <span>Attendance</span>
+                <div class="stat-icon">◷</div>
+            </div>
+
+            <h2>{{ attendance }}%</h2>
+
+            <p>Current attendance</p>
+
+        </div>
+
+
+        <div class="stat-card purple">
+
+            <div class="stat-top">
+                <span>Predicted Grade</span>
+                <div class="stat-icon">✦</div>
+            </div>
+
+            <h2>{{ prediction }}</h2>
+
+            <p>ML prediction</p>
+
+        </div>
+
+
+        <div class="stat-card orange">
+
+            <div class="stat-top">
+                <span>Previous GPA</span>
+                <div class="stat-icon">★</div>
+            </div>
+
+            <h2>{{ previous_gpa }}</h2>
+
+            <p>Academic history</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN GRID -->
+    <section class="dashboard-grid">
+
+
+        <!-- PERFORMANCE -->
+        <div class="panel performance-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h3>Subject Performance</h3>
+                    <p>Current semester analysis</p>
+                </div>
+
+                <button class="view-btn">View Details →</button>
+
+            </div>
+
+
+            <div class="subject-row">
+
+                <div class="subject-name">
+                    <div class="subject-icon python">Py</div>
+
+                    <div>
+                        <strong>Python</strong>
+                        <small>Programming</small>
+                    </div>
+                </div>
+
+                <div class="progress-area">
+
+                    <div class="progress">
+                        <div style="width:{{ python }}%"></div>
+                    </div>
+
+                    <strong>{{ python }}%</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="subject-row">
+
+                <div class="subject-name">
+
+                    <div class="subject-icon dbms">DB</div>
+
+                    <div>
+                        <strong>DBMS</strong>
+                        <small>Database Systems</small>
+                    </div>
+
+                </div>
+
+                <div class="progress-area">
+
+                    <div class="progress">
+                        <div style="width:{{ dbms }}%"></div>
+                    </div>
+
+                    <strong>{{ dbms }}%</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="subject-row">
+
+                <div class="subject-name">
+
+                    <div class="subject-icon dsa">DS</div>
+
+                    <div>
+                        <strong>DSA</strong>
+                        <small>Data Structures</small>
+                    </div>
+
+                </div>
+
+                <div class="progress-area">
+
+                    <div class="progress">
+                        <div style="width:{{ dsa }}%"></div>
+                    </div>
+
+                    <strong>{{ dsa }}%</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI ASSISTANT -->
+        <div class="panel ai-panel">
+
+            <div class="ai-heading">
+
+                <div class="ai-logo">✦</div>
+
+                <div>
+                    <h3>AI Student Assistant</h3>
+                    <p>Powered by Machine Learning</p>
+                </div>
+
+            </div>
+
+
+            <div class="prediction-box">
+
+                <span>Predicted Performance</span>
+
+                <strong>{{ prediction }}</strong>
+
+                <small>Decision Tree Classifier</small>
+
+            </div>
+
+
+            <h4>Personalized Recommendations</h4>
+
+            <div class="recommendations">
+
+                {% for recommendation in recommendations %}
+
+                <div class="recommendation">
+
+                    <span>✓</span>
+
+                    <p>{{ recommendation }}</p>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            
+
+        </div>
+
+
+    </section>
+
+
+    <!-- LOWER SECTION -->
+    <section class="lower-grid">
+
+
+        <!-- ATTENDANCE -->
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h3>Attendance Overview</h3>
+                    <p>Current attendance status</p>
+                </div>
+
+                <span class="status">
+                    {% if attendance >= 75 %}
+                    ● Good
+                    {% else %}
+                    ● Attention Required
+                    {% endif %}
+                </span>
+
+            </div>
+
+
+            <div class="attendance-box">
+
+                <div class="circle">
+
+                    <div>
+                        <strong>{{ attendance }}%</strong>
+                        <small>Attendance</small>
+                    </div>
+
+                </div>
+
+
+                <div class="attendance-info">
+
+                    <div>
+                        <span>Current</span>
+                        <strong>{{ attendance }}%</strong>
+                    </div>
+
+                    <div>
+                        <span>Required</span>
+                        <strong>75%</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACADEMIC SUMMARY -->
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h3>Academic Summary</h3>
+                    <p>Your current academic statistics</p>
+                </div>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+                <div>
+                    <span>Python</span>
+                    <strong>{{ python }}</strong>
+                </div>
+
+                <div>
+                    <span>DBMS</span>
+                    <strong>{{ dbms }}</strong>
+                </div>
+
+                <div>
+                    <span>DSA</span>
+                    <strong>{{ dsa }}</strong>
+                </div>
+
+                <div>
+                    <span>GPA</span>
+                    <strong>{{ previous_gpa }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        AI-Based Student Assistant • Academic Intelligence Platform
+    </footer>
+
+</main>
+
+</body>
+</html>
